@@ -17,6 +17,8 @@ check_internet() {
 if check_internet; then
     # Internet connection is available, run the command
     curl https://get.pimoroni.com/bme680 | bash
+    pip3 install tkinter
+    pip3 install customtkinter
 else
     # No internet connection, exit with non-zero status
     exit 1
@@ -41,7 +43,7 @@ if check_internet; then
         # Sensors are connected, continue with next script
         echo "Sensors are connected. Proceeding with next script..."
         # Enter authentication key step
-	python3 fetch_data.py
+	python3 Authentication.py
     else
         # Sensors are not connected, exit with non-zero status
         exit 1
