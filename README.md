@@ -1,4 +1,4 @@
-<img src="../Logo.png" alt="Designed by FreePik" title="GardenEye Logo" width="150">
+<img src="../misc/Logo.png" alt="Designed by FreePik" title="GardenEye Logo" width="150">
 
 
 # GardenEye
