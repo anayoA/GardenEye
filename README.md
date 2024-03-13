@@ -33,7 +33,7 @@ cd "GardenEye/Raspberry Pi"
 
 **Note**: Ensure your Raspberry Pi is connected to both the internet and the provided BME680 sensor before running.
 ```
-./ gardenEyeSetup.sh
+./gardenEyeSetup.sh
 ```
 If nothing happens, file permissions may need to be changed. This can be done by inputting:
 ```bash
