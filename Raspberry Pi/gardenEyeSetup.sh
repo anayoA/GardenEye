@@ -19,6 +19,9 @@ if check_internet; then
     curl https://get.pimoroni.com/bme680 | bash
     pip3 install tkinter
     pip3 install customtkinter
+    pip3 install requests
+    pip3 install Pillow
+    pip3 install CTkMessagebox
 else
     # No internet connection, exit with non-zero status
     exit 1
@@ -43,7 +46,7 @@ if check_internet; then
         # Sensors are connected, continue with next script
         echo "Sensors are connected. Proceeding with next script..."
         # Enter authentication key step
-	python3 Authentication.py
+	python3 files/Authentication.py
     else
         # Sensors are not connected, exit with non-zero status
         exit 1
