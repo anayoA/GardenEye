@@ -26,7 +26,7 @@ git clone -b raspberry-pi https://github.com/anayoA/GardenEye.git
 ### Navigate to the project directory:
 
 ```bash
-cd "gardeneye/Raspberry Pi"
+cd "GardenEye/Raspberry Pi"
 ```
 
 ### Run gardenEyeSetup:
