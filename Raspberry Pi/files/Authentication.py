@@ -187,9 +187,9 @@ button.place(relx=0.5,
 
 # Logo image
 logo = customtkinter.CTkImage(light_image=Image.open(
-    r"Logo.png"),
+    r"files/Logo.png"),
     dark_image=Image.open(
-        r"Logo.png"),
+        r"files/Logo.png"),
     size=(60, 60))
 # Label to display the logo
 logo_label = customtkinter.CTkLabel(master=frame,

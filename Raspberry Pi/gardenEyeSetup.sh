@@ -17,7 +17,6 @@ check_internet() {
 if check_internet; then
     # Internet connection is available, run the command
     curl https://get.pimoroni.com/bme680 | bash
-    pip3 install tkinter
     pip3 install customtkinter
     pip3 install requests
     pip3 install Pillow
