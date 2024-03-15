@@ -4,14 +4,21 @@ import customtkinter
 import requests
 from PIL import Image
 
+# from PlantReader import *
+
 # Constants for the GUI
 HEX_GREEN = "#009579"
 HEX_GREEN_HOVER = "#006e59"
+POPPINS = "/fonts/Poppins-Regular.otf"
+
+
+valid_credentials = {}
 
 
 def create_warning(title, message):
     return msgbox.CTkMessagebox(title=title, message=message,
-                                icon="warning", option_1="OK",
+                                icon="warning",
+                                option_1="OK",
                                 bg_color="white",
                                 fg_color="white",
                                 text_color="black",
@@ -29,16 +36,24 @@ def auth_warning(message):
     return create_warning("Alert", f"Authentication failed: {message}")
 
 
-def auth_success(title, message):
-    msgbox.CTkMessagebox(message="Authentication successful.",
-                         icon="check", option_1="OK",
-                         bg_color="white",
-                         fg_color="white",
-                         text_color="black",
-                         button_hover_color=HEX_GREEN_HOVER,
-                         button_color=HEX_GREEN,
-                         font=("Poppins", 14),
-                         header=True)
+def auth_success(message):
+    popup = msgbox.CTkMessagebox(title="Success",
+                                 message=message,
+                                 icon="check",
+                                 option_1="OK",
+                                 bg_color="white",
+                                 fg_color="white",
+                                 text_color="black",
+                                 button_hover_color=HEX_GREEN_HOVER,
+                                 button_color=HEX_GREEN,
+                                 font=("Poppins", 14),
+                                 header=True)
+    response = popup.get()
+    if response:
+        print(f"reponse: {valid_credentials}")
+
+        # read_data()
+        # send_data()
 
 
 def authenticate(username, token):
@@ -57,24 +72,34 @@ def authenticate(username, token):
         data = response.json()
 
         if data["success"]:
-            print("Authentication successful:", data["message"])
-            auth_success("Success", data["message"])
+            print("authenticate():", data["message"])
+            auth_success(data["message"])
+            return username, token
         else:
             print("Authentication failed:", data["message"])
             auth_warning(data["message"])
+            return False
     except requests.exceptions.RequestException as e:
         print("Error:", e)
+        return False
 
 
 # Function for sending button input to authentication API
 def send_input():
     token = token_entry.get()
     username = username_entry.get()
+
     token_entry.delete(0, "end")  # Clears entry from text box
+    username_entry.delete(0, "end")  # Clears entry from text box
+
     if token and username:  # Check if input_text is not empty
-        print(username)
-        print(token)
-        authenticate(username, token)
+        print(f"send_input(): {username} + {token}")
+        valid_user, valid_token = authenticate(username, token)
+        print(f"if token and username: {valid_user},{valid_token}")
+        if valid_user and valid_token:
+            valid_credentials["username"] = valid_user
+            valid_credentials["token"] = valid_token
+            print(f'if valid_user and valid_token: {valid_credentials}')
     else:
         print("Please enter a non-blank input.")
         input_warning()
@@ -90,6 +115,9 @@ app.title("GardenEye Setup")
 app.resizable(0, 0)
 app.eval('tk::PlaceWindow . center')
 app.attributes("-topmost", True)
+
+# GUI Embedded Fonts
+poppins12 = customtkinter.CTkFont(family="Poppins", size=16, weight="normal")
 
 frame = customtkinter.CTkFrame(master=app,
                                fg_color="white")
@@ -173,13 +201,6 @@ logo_label = customtkinter.CTkLabel(master=frame,
 logo_label.place(relx=0.5,
                  rely=0.15,
                  anchor=tkinter.CENTER)
-
-# customtkinter.CTkLabel(app, text="CTk Messagebox Examples").grid(padx=20)
-# customtkinter.CTkButton(app, text="Check CTkMessagebox", command=show_checkmark).grid(padx=20, pady=10, sticky="news")
-# customtkinter.CTkButton(app, text="Show Info", command=show_info).grid(padx=20, pady=10, sticky="news")
-# customtkinter.CTkButton(app, text="Show Error", command=show_error).grid(padx=20, pady=10, sticky="news")
-# customtkinter.CTkButton(app, text="Show Warning", command=show_warning).grid(padx=20, pady=10, sticky="news")
-# customtkinter.CTkButton(app, text="Ask Question", command=ask_question).grid(padx=20, pady=(10, 20), sticky="news")
 
 
 app.mainloop()
